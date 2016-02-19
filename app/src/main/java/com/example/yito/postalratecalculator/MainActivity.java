@@ -34,14 +34,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         dropdown = (Spinner) findViewById(R.id.location);
         String[] items = new String[]{"Canada", "United States", "International"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -70,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 boolean nonStandard = isNonStandard(depth, width, height, weight);
                 int weightType = checkWeightType(standard, nonStandard, weight);
                 int price = checkPrice(country, standard, nonStandard, weightType);
-                double decimalPrice = price/100;
+                double decimalPrice = price;
                 DecimalFormat form = new DecimalFormat("0.00");
-                String displayPrice = form.format(decimalPrice);
+                String displayPrice = form.format(decimalPrice/100);
                 if (price != 0) {
                     Toast.makeText(MainActivity.this, "The cost of sending letter mail will be: $" + displayPrice, Toast.LENGTH_LONG).show();
                 } else {
@@ -145,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static int checkPrice(String country, boolean standard, boolean nonStandard, int weightType) {
-        if (standard) {
+        if (country.equals("Canada")) {
             if (standard) {
                 if (weightType == 0) {
                     return 100;
