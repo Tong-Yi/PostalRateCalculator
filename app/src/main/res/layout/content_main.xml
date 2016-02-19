@@ -77,22 +77,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Length(mm)"
+        android:text="Height(mm)"
         android:id="@+id/textView2"
-        android:layout_alignBaseline="@+id/depth"
-        android:layout_alignBottom="@+id/depth"
-        android:layout_toLeftOf="@+id/depth"
-        android:layout_toStartOf="@+id/depth" />
+        android:layout_alignBaseline="@+id/height"
+        android:layout_alignBottom="@+id/height"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_alignEnd="@+id/textView4" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Depth(mm)"
         android:id="@+id/textView3"
-        android:layout_alignBaseline="@+id/height"
-        android:layout_alignBottom="@+id/height"
-        android:layout_toLeftOf="@+id/height"
-        android:layout_toStartOf="@+id/height" />
+        android:layout_alignBaseline="@+id/depth"
+        android:layout_alignBottom="@+id/depth"
+        android:layout_toLeftOf="@+id/depth"
+        android:layout_toStartOf="@+id/depth" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -109,6 +109,7 @@
         android:layout_height="wrap_content"
         android:text="Location"
         android:id="@+id/textView5"
+        android:layout_marginTop="19dp"
         android:layout_alignTop="@+id/location"
         android:layout_toLeftOf="@+id/location"
         android:layout_toStartOf="@+id/location" />
@@ -124,11 +125,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/priceOutput"
-        android:layout_alignRight="@+id/location"
-        android:layout_alignEnd="@+id/location"
+        android:id="@+id/specifications"
+        android:text="Standard Letter Mail: Width(140-245mm), Height(90-156mm), Depth(0-5mm), Weight(0-50g)"
+        android:layout_marginTop="18dp"
         android:layout_below="@+id/submit"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2" />
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Non-Standard Letter Mail: Width(140-380mm), Height(90-270mm), Depth(0-20mm), Weight(0-500g)"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/specifications"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="19dp" />
 
 </RelativeLayout>

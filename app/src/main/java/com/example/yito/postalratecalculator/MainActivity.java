@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
     EditText editWidth;
     EditText editDepth;
@@ -64,17 +66,18 @@ public class MainActivity extends AppCompatActivity {
                 int width = Integer.parseInt(editWidth.getText().toString());
                 int height = Integer.parseInt(editHeight.getText().toString());
                 int weight = Integer.parseInt(editWeight.getText().toString());
-                boolean standard = isStandard(depth, width, height);
-                boolean nonStandard = isNonStandard(depth, width, height);
+                boolean standard = isStandard(depth, width, height, weight);
+                boolean nonStandard = isNonStandard(depth, width, height, weight);
                 int weightType = checkWeightType(standard, nonStandard, weight);
                 int price = checkPrice(country, standard, nonStandard, weightType);
-                double displayPrice = price / 100;
+                double decimalPrice = price/100;
+                DecimalFormat form = new DecimalFormat("0.00");
+                String displayPrice = form.format(decimalPrice);
                 if (price != 0) {
-                    Toast.makeText(MainActivity.this, "The cost of sending letter mail will be: " + displayPrice, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "The cost of sending letter mail will be: $" + displayPrice, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(MainActivity.this, "Your letter mail does not meet the specifications", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
@@ -103,16 +106,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static int checker() {
-        return 0;
-    }
-
-    public static boolean isStandard(int depth, int width, int height) {
-
-        if (width <= 245 && width >= 140 && height <= 156 && height >= 90 && depth <= 5) {
+    public static boolean isStandard(int depth, int width, int height, int weight) {
+        if (width <= 245 && width >= 140 && height <= 156 && height >= 90 && depth <= 5 && weight <= 50) {
             return true;
         }
+        return false;
+    }
 
+    public static boolean isNonStandard(int depth, int width, int height, int weight) {
+        if (width <= 380 && width >= 140 && height <= 270 && height >= 90 && depth <= 20 && weight <= 500) {
+            return true;
+        }
         return false;
     }
 
@@ -140,80 +144,59 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static boolean isNonStandard(int depth, int width, int height) {
-        if (width <= 380 && width >= 140 && height <= 270 && height >= 90 && depth <= 20) {
-            return true;
-        }
-        return false;
-    }
-
-    public static int checkPrice(String country, boolean standard, boolean nonStandard, int overWeight) {
-        if (country.equals("Canada")) {
+    public static int checkPrice(String country, boolean standard, boolean nonStandard, int weightType) {
+        if (standard) {
             if (standard) {
-                if (overWeight == 0) {
+                if (weightType == 0) {
                     return 100;
-                } else if (overWeight == 1) {
+                } else if (weightType == 1) {
                     return 120;
-                } else {
-                    return 0;
                 }
             } else if (nonStandard) {
-                if (overWeight == 2) {
+                if (weightType == 2) {
                     return 180;
-                } else if (overWeight == 3) {
+                } else if (weightType == 3) {
                     return 295;
-                } else if (overWeight == 4) {
+                } else if (weightType == 4) {
                     return 410;
-                } else if (overWeight == 5) {
+                } else if (weightType == 5) {
                     return 470;
-                } else if (overWeight == 6) {
+                } else if (weightType == 6) {
                     return 505;
-                } else {
-                    return 0;
-                }
-            }
+                }             }
         } else if (country.equals("United States")) {
             if (standard) {
-                if (overWeight == 0) {
+                if (weightType == 0) {
                     return 120;
-                } else if (overWeight == 1) {
+                } else if (weightType == 1) {
                     return 180;
-                } else {
-                    return 0;
                 }
             } else if (nonStandard) {
-                if (overWeight == 2) {
+                if (weightType == 2) {
                     return 295;
-                } else if (overWeight == 3) {
+                } else if (weightType == 3) {
                     return 515;
-                } else if (overWeight >= 4 && overWeight <= 6) {
+                } else if (weightType >= 4 && weightType <= 6) {
                     return 1030;
-                } else {
-                    return 0;
                 }
             }
 
         } else if (country.equals("International")) {
             if (standard) {
-                if (overWeight == 0) {
+                if (weightType == 0) {
                     return 250;
-                } else if (overWeight == 1) {
+                } else if (weightType == 1) {
                     return 360;
-                } else {
-                    return 0;
                 }
             } else if (nonStandard) {
-                if (overWeight == 2) {
+                if (weightType == 2) {
                     return 590;
-                } else if (overWeight == 3) {
+                } else if (weightType == 3) {
                     return 1030;
-                } else if (overWeight >= 4 && overWeight <= 6) {
+                } else if (weightType >= 4 && weightType <= 6) {
                     return 2060;
-                } else {
-                    return 0;
                 }
             }
-
         }
         return 0;
     }
