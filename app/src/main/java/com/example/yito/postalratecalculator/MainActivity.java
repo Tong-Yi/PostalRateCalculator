@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     String country;
     Button button;
     Spinner dropdown;
+    int height;
+    int depth;
+    int width;
+    int weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +58,21 @@ public class MainActivity extends AppCompatActivity {
                 editHeight = (EditText) findViewById(R.id.height);
                 editWeight = (EditText) findViewById(R.id.weight);
                 country = dropdown.getSelectedItem().toString();
-                int depth = Integer.parseInt(editDepth.getText().toString());
-                int width = Integer.parseInt(editWidth.getText().toString());
-                int height = Integer.parseInt(editHeight.getText().toString());
-                int weight = Integer.parseInt(editWeight.getText().toString());
+                try {
+                    depth = Integer.parseInt(editDepth.getText().toString());
+                    width = Integer.parseInt(editWidth.getText().toString());
+                    height = Integer.parseInt(editHeight.getText().toString());
+                    weight = Integer.parseInt(editWeight.getText().toString());
+                } catch (NumberFormatException nfe) {
+
+                }
                 boolean standard = isStandard(depth, width, height, weight);
                 boolean nonStandard = isNonStandard(depth, width, height, weight);
                 int weightType = checkWeightType(standard, nonStandard, weight);
                 int price = checkPrice(country, standard, nonStandard, weightType);
                 double decimalPrice = price;
                 DecimalFormat form = new DecimalFormat("0.00");
-                String displayPrice = form.format(decimalPrice/100);
+                String displayPrice = form.format(decimalPrice / 100);
                 if (price != 0) {
                     Toast.makeText(MainActivity.this, "The cost of sending letter mail will be: $" + displayPrice, Toast.LENGTH_LONG).show();
                 } else {
@@ -72,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     @Override
@@ -133,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return 9;
-
     }
 
     public static int checkPrice(String country, boolean standard, boolean nonStandard, int weightType) {
@@ -155,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
                     return 470;
                 } else if (weightType == 6) {
                     return 505;
-                }             }
+                }
+            }
         } else if (country.equals("United States")) {
             if (standard) {
                 if (weightType == 0) {
