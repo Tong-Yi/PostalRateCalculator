@@ -155,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                     return 1030;
                 }
             }
-
         } else if (country.equals("International")) {
             if (standard) {
                 if (weight <= 30) {
